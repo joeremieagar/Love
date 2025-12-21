@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Letter For You</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@300&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS STYLES */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* The Envelope / Start Button Area */
+        #start-screen {
+            text-align: center;
+            z-index: 10;
+            transition: opacity 1s ease;
+        }
+
+        .heart-btn {
+            font-size: 50px;
+            cursor: pointer;
+            animation: pulse 1.5s infinite;
+            background: none;
+            border: none;
+            outline: none;
+            user-select: none;
+        }
+
+        .instruction {
+            margin-top: 10px;
+            color: #555;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        /* The Letter Container */
+        #letter-container {
+            position: absolute;
+            width: 80%;
+            max-width: 600px;
+            background: #fff0f5; /* Light pink paper */
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transform: scale(0); /* Hidden initially */
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 5;
+            border: 2px solid #ffccd5;
+        }
+
+        #letter-content {
+            font-family: 'Dancing Script', cursive;
+            font-size: 24px;
+            color: #4a4a4a;
+            line-height: 1.6;
+            min-height: 200px;
+            white-space: pre-wrap; /* Preserves formatting */
+        }
+
+        /* Floating Hearts Animation Background */
+        .floating-heart {
+            position: absolute;
+            top: 100vh;
+            font-size: 20px;
+            color: #ff6b81;
+            opacity: 0.8;
+            animation: floatUp linear forwards;
+            z-index: 1;
+        }
+
+        /* Keyframes for Animations */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes floatUp {
+            to {
+                transform: translateY(-120vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Signature styling */
+        .signature {
+            text-align: right;
+            margin-top: 20px;
+            font-weight: bold;
+            font-family: 'Dancing Script', cursive;
+            font-size: 28px;
+            color: #d63031;
+            opacity: 0; /* Hidden until typing finishes */
+            transition: opacity 1s ease;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="start-screen">
+        <button class="heart-btn" onclick="openLetter()">💌</button>
+        <div class="instruction">Click the envelope</div>
+    </div>
+
+    <div id="letter-container">
+        <div id="letter-content"></div>
+        <div class="signature" id="signature">- Yours Forever, Joe</div>
+    </div>
+
+    <script>
+        // JAVASCRIPT LOGIC
+
+        // 1. CONFIGURATION: Edit your message here!
+        const message = `Dear Love,
+Gusto kong sabihin na Thank you sa lahat. Ikaw ang reason kung bakit pinupush ko ang sarili ko maging better version of myself para sayo. Thank you dahil ikaw ang nagsisilbing lucky charm ko, lahat ng 'to ay di mangyayare kung di kita nakilala.
+
+Pumasok ang taon na we're completely strangers pero what a plot twist. Now we are celebrating together.
+
+Happy 1st Monthsarry Love <3`;
+
+        // 2. LOGIC
+        const startScreen = document.getElementById('start-screen');
+        const letterContainer = document.getElementById('letter-container');
+        const letterContent = document.getElementById('letter-content');
+        const signature = document.getElementById('signature');
+
+        // Function to start the experience
+        function openLetter() {
+            startScreen.style.opacity = '0';
+            setTimeout(() => {
+                startScreen.style.display = 'none';
+                letterContainer.style.transform = 'scale(1)';
+                startHeartRain();
+                typeWriter();
+            }, 1000);
+        }
+
+        // Typewriter Effect
+        let i = 0;
+        const speed = 50; // Speed in milliseconds
+
+        function typeWriter() {
+            if (i < message.length) {
+                letterContent.innerHTML += message.charAt(i);
+                i++;
+                setTimeout(typeWriter, speed);
+            } else {
+                // Show signature after typing finishes
+                signature.style.opacity = '1';
+            }
+        }
+
+        // Falling Hearts Background Effect
+        function startHeartRain() {
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.classList.add('floating-heart');
+                heart.innerHTML = '❤';
+                
+                // Randomize position and size
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+                heart.style.animationDuration = Math.random() * 3 + 2 + 's'; // 2s to 5s
+                
+                document.body.appendChild(heart);
+
+                // Remove heart from DOM after animation ends to prevent lag
+                setTimeout(() => {
+                    heart.remove();
+                }, 5000);
+            }, 300);
+        }
+    </script>
+</body>
+</html>
