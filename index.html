@@ -3,183 +3,205 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Letter For You</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@300&display=swap" rel="stylesheet">
-    
+    <title>For You, My Love</title>
     <style>
-        /* CSS STYLES */
-        body {
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Lora:ital,wght@0,400;1,400&display=swap');
+
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            height: 100vh;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ffe6e6 0%, #ffb3c6 100%);
+            font-family: 'Lora', serif;
+            color: #4a2c2c;
+            min-height: 100vh;
+            overflow-x: hidden;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
-            overflow: hidden;
-            font-family: 'Poppins', sans-serif;
+            padding: 40px 20px;
         }
 
-        /* The Envelope / Start Button Area */
-        #start-screen {
-            text-align: center;
-            z-index: 10;
-            transition: opacity 1s ease;
+        /* Falling Hearts Animation */
+        .heart {
+            position: fixed;
+            top: -10vh;
+            font-size: 1.5rem;
+            color: rgba(255, 77, 109, 0.6);
+            animation: fall linear forwards;
+            z-index: 0;
+            pointer-events: none;
         }
 
-        .heart-btn {
-            font-size: 50px;
-            cursor: pointer;
-            animation: pulse 1.5s infinite;
-            background: none;
-            border: none;
-            outline: none;
-            user-select: none;
-        }
-
-        .instruction {
-            margin-top: 10px;
-            color: #555;
-            font-size: 14px;
-            opacity: 0.7;
-        }
-
-        /* The Letter Container */
-        #letter-container {
-            position: absolute;
-            width: 80%;
-            max-width: 600px;
-            background: #fff0f5; /* Light pink paper */
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transform: scale(0); /* Hidden initially */
-            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 5;
-            border: 2px solid #ffccd5;
-        }
-
-        #letter-content {
-            font-family: 'Dancing Script', cursive;
-            font-size: 24px;
-            line-height: 1.2;
-            min-height: 200px;
-            white-space: pre-wrap; /* Preserves formatting */
-        }
-
-        /* Floating Hearts Animation Background */
-        .floating-heart {
-            position: absolute;
-            top: 100vh;
-            font-size: 20px;
-            color: #ff6b81;
-            opacity: 0.8;
-            animation: floatUp linear forwards;
-            z-index: 1;
-        }
-
-        /* Keyframes for Animations */
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
-
-        @keyframes floatUp {
+        @keyframes fall {
             to {
-                transform: translateY(-120vh) rotate(360deg);
-                opacity: 0;
+                transform: translateY(110vh) rotate(360deg);
             }
         }
 
-        /* Signature styling */
-        .signature {
-            text-align: right;
-            margin-top: 20px;
-            font-weight: bold;
+        /* Main Container */
+        .container {
+            max-width: 800px;
+            width: 100%;
+            z-index: 1; /* Keep above hearts */
+        }
+
+        /* The Love Letter */
+        .letter-box {
+            background-color: #fff9f9;
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .letter-box::before {
+            content: '❤️';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 40px;
+            background: #fff9f9;
+            border-radius: 50%;
+            padding: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        h1 {
             font-family: 'Dancing Script', cursive;
-            font-size: 28px;
-            color: #d63031;
-            opacity: 0; /* Hidden until typing finishes */
-            transition: opacity 1s ease;
+            font-size: 3.5rem;
+            text-align: center;
+            color: #c9184a;
+            margin-bottom: 30px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            text-align: right;
+            color: #c9184a;
+            margin-top: 40px;
+        }
+
+        /* Photo Collage */
+        .collage-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            text-align: center;
+            color: #c9184a;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.5);
+        }
+
+        .collage {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .photo {
+            background: white;
+            padding: 10px;
+            padding-bottom: 30px; /* Polaroid effect */
+            border-radius: 5px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .photo:hover {
+            transform: translateY(-10px) rotate(2deg);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+        }
+
+        .photo:nth-child(even):hover {
+            transform: translateY(-10px) rotate(-2deg);
+        }
+
+        .photo img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 3px;
+        }
+        
+        @media (max-width: 600px) {
+            .letter-box {
+                padding: 30px 20px;
+            }
+            h1 {
+                font-size: 2.8rem;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div id="start-screen">
-        <button class="heart-btn" onclick="openLetter()">💌</button>
-        <div class="instruction">Click the envelope</div>
-    </div>
+    <div class="container">
+        <div class="letter-box">
+            <h1>My Love,</h1>
+            <p>Happy 3rd Monthsary, Love!</p>
+            
+            <p>Alam ko 90 days pa lang tayong ganito, pero bakit feeling ko ang tagal na nating magkakilala? Siguro kasi sobrang bilis ko naging comfortable sa’yo. In just three months, naging paborito na kitang kausap, paboritong asaran, at higit sa lahat, ikaw na yung naging "safe space" ko.</p>
+            
+            <p>Salamat kasi sa loob ng tatlong buwan na ‘to, hindi mo pinaramdam sa akin na mag-isa ako. Thank you for the small things yung mga random updates mo, yung pakikinig sa mga rants ko kahit mas madalas ka mag rant, at yung pagpapasensya sa akin kapag medyo makulit ako. I really appreciate how you make an effort to be there, whether physically or sa chat lang.</p>
 
-    <div id="letter-container">
-        <div id="letter-content"></div>
-        <div class="signature" id="signature">- Yours Forever, Joe</div>
+            <p>I know hindi naman laging perfect at smooth ang lahat, pero ang mahalaga, we’re learning together. Excited ako sa mas marami pang food trips, gala lalo na pag may motor na tayo, at kahit yung mga simpleng tambay lang nating dalawa. 3 months down, and honestly, I’m looking forward to forever </p>
+
+            <p>I’m so lucky to have you. Mahal na mahal kita, Love! Happy Monthsary!</p>
+            
+            <div class="signature">Forever Yours, Bumblebee</div>
+        </div>
+
+        <h2 class="collage-title">Our Beautiful Memories</h2>
+        <div class="collage">
+            <div class="photo"><img src="img/1.jpg" alt="Memory 1"></div>
+            <div class="photo"><img src="img/2.jpg" alt="Memory 2"></div>
+            <div class="photo"><img src="img/3.jpg" alt="Memory 3"></div>
+            <div class="photo"><img src="img/4.jpg" alt="Memory 4"></div>
+            <div class="photo"><img src="img/5.jpg" alt="Memory 5"></div>
+            <div class="photo"><img src="img/6.jpg" alt="Memory 6"></div>
+        </div>
     </div>
 
     <script>
-        // JAVASCRIPT LOGIC
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            
+            // Randomize heart appearance
+            const hearts = ['❤️', '💖', '💕', '🌸', '✨'];
+            heart.innerText = hearts[Math.floor(Math.random() * hearts.length)];
+            
+            // Randomize position and animation duration
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 4 + 's'; // Between 4 and 7 seconds
+            heart.style.fontSize = Math.random() * 1.5 + 0.5 + 'rem'; // Different sizes
 
-        // 1. CONFIGURATION: Edit your message here!
-        const message = `Hi Love,
-Gusto kong sabihin na Thank you sa lahat. Ikaw ang reason kung bakit pinupush ko ang sarili ko maging better version of myself para sayo. Thank you dahil ikaw ang nagsisilbing lucky charm ko, lahat ng 'to ay di mangyayare kung di kita nakilala.
+            document.body.appendChild(heart);
 
-Pumasok ang taon na we're completely strangers pero what a plot twist. Now we are celebrating together.
-
-Happy 1st Monthsarry Love. I Love you so much <3`;
-
-        // 2. LOGIC
-        const startScreen = document.getElementById('start-screen');
-        const letterContainer = document.getElementById('letter-container');
-        const letterContent = document.getElementById('letter-content');
-        const signature = document.getElementById('signature');
-
-        // Function to start the experience
-        function openLetter() {
-            startScreen.style.opacity = '0';
+            // Remove heart after it falls off screen to keep the browser running smoothly
             setTimeout(() => {
-                startScreen.style.display = 'none';
-                letterContainer.style.transform = 'scale(1)';
-                startHeartRain();
-                typeWriter();
-            }, 1000);
+                heart.remove();
+            }, 7000);
         }
 
-        // Typewriter Effect
-        let i = 0;
-        const speed = 50; // Speed in milliseconds
-
-        function typeWriter() {
-            if (i < message.length) {
-                letterContent.innerHTML += message.charAt(i);
-                i++;
-                setTimeout(typeWriter, speed);
-            } else {
-                // Show signature after typing finishes
-                signature.style.opacity = '1';
-            }
-        }
-
-        // Falling Hearts Background Effect
-        function startHeartRain() {
-            setInterval(() => {
-                const heart = document.createElement('div');
-                heart.classList.add('floating-heart');
-                heart.innerHTML = '❤';
-                
-                // Randomize position and size
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.fontSize = Math.random() * 20 + 10 + 'px';
-                heart.style.animationDuration = Math.random() * 3 + 2 + 's'; // 2s to 5s
-                
-                document.body.appendChild(heart);
-
-                // Remove heart from DOM after animation ends to prevent lag
-                setTimeout(() => {
-                    heart.remove();
-                }, 5000);
-            }, 300);
-        }
+        // Create a new heart every 400 milliseconds
+        setInterval(createHeart, 400);
     </script>
+
 </body>
 </html>
